@@ -1,0 +1,38 @@
+import tkinter as tk
+from tkinter import messagebox
+X = tk.Tk()
+X.title("To-Do List App")
+X.geometry("500x650")
+tasks= []
+
+def add_task():
+    task = task_entry.get()
+    if task:
+        tasks.append(task)
+        update_listbox()
+        task_entry.delete(0, tk.END)
+    else:
+        messagebox.showwarning("Error", " Enter a task.")
+        
+def delete_task():
+    selected = listbox.curselection()
+    if selected:
+        index = selected[0]
+        tasks.pop(index)
+        update_listbox()
+    else:
+        messagebox.showwarning("Select Task", "None selected.")
+        
+def update_listbox():
+    listbox.delete(0, tk.END)
+    for task in tasks:
+        listbox.insert(tk.END, task)
+        
+tk.Label(X, text="TO-DO LIST APPLICATION", font=("helvetica", 16, "bold")).pack(pady=14)
+task_entry = tk.Entry(X, width=32, font=("helvetica", 14))
+task_entry.pack(pady=10)
+tk.Button(X, text="Add Task", width=15, command=add_task).pack(pady=5)
+tk.Button(X, text="Delete a Task", width=15, command=delete_task).pack(pady=5)
+listbox = tk.Listbox(X, width=40, height=10, font=(" helvetica",12))
+listbox.pack(pady=20)
+X.mainloop()
